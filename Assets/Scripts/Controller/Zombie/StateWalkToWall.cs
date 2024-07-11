@@ -7,6 +7,7 @@ using UnityEngine;
 public class StateWalkToWall : StateZombieNPC {
     private bool seePlayer;
     private bool nextToWall;
+    private float minDistance = 1f;
     private Vector3 directionToMove;
     private Quaternion targetRotation;
 
@@ -20,15 +21,20 @@ public class StateWalkToWall : StateZombieNPC {
     }
 
     public override void Update() {
+
         if (seePlayer) {
             npc.ChangeState(npc.GetStateWalkToPlayer());
-        }
-        if (nextToWall) {
-            npc.ChangeState(npc.GetStateDestroyWall());
         }
 
         directionToMove = npc.GetWallPosition() - npc.transform.position;
         directionToMove.Normalize();
+
+        // TODO - check if it is next to Wall
+        nextToWall = directionToMove.sqrMagnitude < minDistance;
+        if (nextToWall) {
+            npc.ChangeState(npc.GetStateDestroyWall());
+        }
+
         targetRotation = Quaternion.LookRotation(directionToMove);
         targetRotation.x = 0;
         targetRotation.z = 0;
@@ -43,8 +49,8 @@ public class StateWalkToWall : StateZombieNPC {
 
     public override void HandleCollision(Collider other) {
         if (other.CompareTag("PlayerBody") && !seePlayer) {
-            // TODO - seePlayer = true;
-            nextToWall = true;
+            seePlayer = true;
+            // nextToWall = true;
         }
         if (other.CompareTag("Gate") && !nextToWall) {
             nextToWall = true;

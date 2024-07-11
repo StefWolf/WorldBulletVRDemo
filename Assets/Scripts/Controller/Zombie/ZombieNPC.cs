@@ -11,6 +11,7 @@ public class ZombieNPC : MonoBehaviour {
     private StateDestroyWall stateDestroyWall;
     private StateWalkToPlayer stateWalkToPlayer;
     private StateWalkToWall stateWalkToWall;
+    private StateKillPlayer stateKillPlayer;
     // TODO - Add more states here
     [SerializeField] private int damageAmount = 10;
     [SerializeField] private float moveSpeed;
@@ -24,11 +25,12 @@ public class ZombieNPC : MonoBehaviour {
     private void Start() {
         animator = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player");
-        wall = GameObject.FindWithTag("Player");
+        wall = GameObject.FindWithTag("Gate");
 
         stateDestroyWall = new StateDestroyWall(this);
         stateWalkToPlayer = new StateWalkToPlayer(this);
         stateWalkToWall = new StateWalkToWall(this);
+        stateKillPlayer = new StateKillPlayer(this);
         // TODO - Add more states here
         moveSpeedMemo = moveSpeed;
         currentState = stateWalkToWall;
@@ -113,6 +115,10 @@ public class ZombieNPC : MonoBehaviour {
     }
     public StateWalkToWall GetStateWalkToWall(){
         return this.stateWalkToWall;
+    }
+    public StateWalkToWall GetStateKillPlayer()
+    {
+        return this.stateKillPlayer;
     }
 
     // TODO - Add more getters states here
