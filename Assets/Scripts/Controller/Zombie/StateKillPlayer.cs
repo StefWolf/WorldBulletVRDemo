@@ -6,6 +6,7 @@ using UnityEngine;
 // In this state, the NPC is destroyinh the wall
 public class StateKillPlayer : StateZombieNPC {
     private bool nextToPlayer;
+    private Vector3 directionToPlayer;
 
     public StateKillPlayer(ZombieNPC npc) : base(npc) { }
 
@@ -16,9 +17,11 @@ public class StateKillPlayer : StateZombieNPC {
     }
 
     public override void Update() {
-        Debug.Log("KillPlayer");
+        Debug.Log("StateKillPlayer");
 
-        // TODO - check if it is next to Player
+        directionToPlayer = npc.GetPlayerPosition() - npc.transform.position;
+
+        nextToPlayer = directionToPlayer.magnitude <= 2.5f;
         if (!nextToPlayer) {
             npc.ChangeState(npc.GetStateWalkToPlayer());
         }

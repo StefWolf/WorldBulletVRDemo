@@ -7,8 +7,7 @@ using UnityEngine;
 public class StateWalkToWall : StateZombieNPC {
     private bool seePlayer;
     private bool nextToWall;
-    private float minDistance = 1f;
-    private Vector3 directionToMove;
+    private Vector3 directionToWall, directionToPlayer;
     private Quaternion targetRotation;
 
     public StateWalkToWall(ZombieNPC npc) : base(npc) { }
@@ -21,25 +20,27 @@ public class StateWalkToWall : StateZombieNPC {
     }
 
     public override void Update() {
+        directionToPlayer = npc.GetPlayerPosition() - npc.transform.position;
 
+        Debug.Log("StateWalkToWall - Distance: " + directionToPlayer.magnitude);
+
+        // Check if it is seeing the Player
+        seePlayer = directionToPlayer.magnitude <= npc.GetMinDistance();
         if (seePlayer) {
             npc.ChangeState(npc.GetStateWalkToPlayer());
         }
 
-        directionToMove = npc.GetWallPosition() - npc.transform.position;
-        directionToMove.Normalize();
-
-        // TODO - check if it is next to Wall
-        nextToWall = directionToMove.sqrMagnitude < minDistance;
         if (nextToWall) {
             npc.ChangeState(npc.GetStateDestroyWall());
         }
 
-        targetRotation = Quaternion.LookRotation(directionToMove);
+        directionToWall = npc.GetWallPosition() - npc.transform.position;
+        directionToWall.Normalize();
+        targetRotation = Quaternion.LookRotation(directionToWall);
         targetRotation.x = 0;
         targetRotation.z = 0;
         npc.transform.rotation = Quaternion.Slerp(npc.transform.rotation, targetRotation, Time.deltaTime);
-        npc.transform.Translate(directionToMove * npc.GetMoveSpeed() * Time.deltaTime, Space.World);
+        npc.transform.Translate(directionToWall * npc.GetMoveSpeed() * Time.deltaTime, Space.World);
     }
 
     public override void Exit() {
@@ -50,7 +51,6 @@ public class StateWalkToWall : StateZombieNPC {
     public override void HandleCollision(Collider other) {
         if (other.CompareTag("PlayerBody") && !seePlayer) {
             seePlayer = true;
-            // nextToWall = true;
         }
         if (other.CompareTag("Gate") && !nextToWall) {
             nextToWall = true;

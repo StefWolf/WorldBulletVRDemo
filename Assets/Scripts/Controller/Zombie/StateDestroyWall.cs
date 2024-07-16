@@ -7,6 +7,7 @@ using UnityEngine;
 public class StateDestroyWall : StateZombieNPC {
     private bool seePlayer;
     private bool nextToWall;
+    private Vector3 directionToPlayer;
 
     public StateDestroyWall(ZombieNPC npc) : base(npc) { }
 
@@ -19,13 +20,15 @@ public class StateDestroyWall : StateZombieNPC {
 
     public override void Update() {
         Debug.Log("DestroyWall");
+        
+        directionToPlayer = npc.GetPlayerPosition() - npc.transform.position;
 
+        seePlayer = directionToPlayer.magnitude <= npc.GetMinDistance();
         if (seePlayer) {
             npc.ChangeState(npc.GetStateWalkToPlayer());
         }
 
-        if (!nextToWall)
-        {
+        if (!nextToWall) {
             npc.ChangeState(npc.GetStateWalkToWall());
         }
     }

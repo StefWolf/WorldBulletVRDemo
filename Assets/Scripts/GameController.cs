@@ -38,12 +38,13 @@ public class GameController : MonoBehaviour
 
     private float nextTime = 0.0f;
 
+    private int limit = 0;
+
     [SerializeField]
     private AudioSource audioGlobal;
 
     void Start()
     {
-
         canvasGameOver.gameObject.SetActive(false);
         degreesPerSecond = 360.0f / (minutesForFullRotation * 60.0f);
         day = 0;
@@ -52,7 +53,8 @@ public class GameController : MonoBehaviour
     }
 
     void SpawnZombie()
-    {
+    {   
+        //if (limit > 0) { return; }
         System.Random random = new System.Random();
         int randomIndex = random.Next(0, pointsOfSpawnZombie.Count);
         int randomIndexZombies = random.Next(0, zombiesPrefabs.Count);
@@ -64,6 +66,7 @@ public class GameController : MonoBehaviour
             pointsOfSpawnZombie[randomIndex].transform.position.z);
 
         Instantiate(zombiesPrefabs[randomIndexZombies], positionBornZombie, Quaternion.identity);
+        //limit += 1;
     }
 
     void Update()

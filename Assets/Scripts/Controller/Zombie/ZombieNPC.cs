@@ -5,14 +5,16 @@ using UnityEngine;
 public class ZombieNPC : MonoBehaviour {
     private int maxLife = 100;
     private int life = 100;
-    private float moveSpeedMemo;
+    private float moveSpeedMemo, minDistance = 10f;
     private Animator animator;
+
+    // NPC finite state machine
     private StateZombieNPC currentState;
     private StateDestroyWall stateDestroyWall;
     private StateWalkToPlayer stateWalkToPlayer;
     private StateWalkToWall stateWalkToWall;
     private StateKillPlayer stateKillPlayer;
-    // TODO - Add more states here
+
     [SerializeField] private int damageAmount = 10;
     [SerializeField] private float moveSpeed;
     [SerializeField] private GameObject player;
@@ -31,7 +33,7 @@ public class ZombieNPC : MonoBehaviour {
         stateWalkToPlayer = new StateWalkToPlayer(this);
         stateWalkToWall = new StateWalkToWall(this);
         stateKillPlayer = new StateKillPlayer(this);
-        // TODO - Add more states here
+        
         moveSpeedMemo = moveSpeed;
         currentState = stateWalkToWall;
         currentState.Enter();
@@ -116,15 +118,17 @@ public class ZombieNPC : MonoBehaviour {
     public StateWalkToWall GetStateWalkToWall(){
         return this.stateWalkToWall;
     }
-    public StateWalkToWall GetStateKillPlayer()
-    {
+    public StateKillPlayer GetStateKillPlayer() {
         return this.stateKillPlayer;
     }
 
     // TODO - Add more getters states here
 
-    public int GetLife(){
+    public int GetLife() {
         return this.life;
+    }
+    public float GetMinDistance() {
+        return this.minDistance;
     }
 
     public float GetMoveSpeed() {
@@ -178,5 +182,4 @@ public class ZombieNPC : MonoBehaviour {
     public int GetDamageAmount(){
         return damageAmount;
     }
-
 }

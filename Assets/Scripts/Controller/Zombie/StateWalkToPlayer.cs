@@ -7,8 +7,7 @@ using UnityEngine;
 public class StateWalkToPlayer : StateZombieNPC {
     private bool seePlayer;
     private bool nextToPlayer;
-    private float minDistance = 1f;
-    private Vector3 directionToMove;
+    private Vector3 directionToPlayer;
     private Quaternion targetRotation;
 
     public StateWalkToPlayer(ZombieNPC npc) : base(npc) { }
@@ -16,31 +15,31 @@ public class StateWalkToPlayer : StateZombieNPC {
     public override void Enter() {
         seePlayer = true;
         nextToPlayer = false;
-        npc.SetWalkingAnimation();
+        npc.SetRunAnimation();
         Debug.Log("Entrou no estado WalkToPlayer");
     }
 
     public override void Update() {
-        Debug.Log("WalkToPlayer");
+        directionToPlayer = npc.GetPlayerPosition() - npc.transform.position;
 
-        if (!seePlayer) {
-            npc.ChangeState(npc.GetStateWalkToWall());
-        }
+        Debug.Log("StateWalkToPlayer - Distance: " + directionToPlayer.magnitude);
 
-        directionToMove = npc.GetPlayerPosition() - npc.transform.position;
-        directionToMove.Normalize();
-
-        // TODO - check if it is next to Player
-        nextToPlayer = directionToMove.sqrMagnitude < minDistance;
+        nextToPlayer = directionToPlayer.magnitude <= 2.5f;
         if (nextToPlayer) {
             npc.ChangeState(npc.GetStateKillPlayer());
         }
 
-        targetRotation = Quaternion.LookRotation(directionToMove);
+        seePlayer = directionToPlayer.magnitude <= npc.GetMinDistance();
+        if (!seePlayer) {
+           npc.ChangeState(npc.GetStateWalkToWall());
+        }
+
+        directionToPlayer.Normalize();
+        targetRotation = Quaternion.LookRotation(directionToPlayer);
         targetRotation.x = 0;
         targetRotation.z = 0;
         npc.transform.rotation = Quaternion.Slerp(npc.transform.rotation, targetRotation, Time.deltaTime);
-        npc.transform.Translate(directionToMove * npc.GetMoveSpeed() * Time.deltaTime, Space.World);
+        npc.transform.Translate(directionToPlayer * npc.GetMoveSpeed() * Time.deltaTime, Space.World);
     }
 
     public override void Exit() {
@@ -50,6 +49,9 @@ public class StateWalkToPlayer : StateZombieNPC {
 
     public override void HandleCollision(Collider other) {
         Debug.Log("Colidindo com algo");
+        if (other.CompareTag("PlayerBody") && !nextToPlayer) {
+            nextToPlayer = true;
+        }
     }
 
     public override void CollisionFinished(Collider other) {
