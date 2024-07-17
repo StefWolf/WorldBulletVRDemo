@@ -65,7 +65,9 @@ public class ZombieNPC : MonoBehaviour {
     }
 
     public void OnTriggerEnter(Collider other) {
+        Debug.Log("o " + other.tag + " entrou em colisão com o zumbi");
         if (other.CompareTag("Bullet")){
+            Debug.Log("Acertou o zumbi!");
             moveSpeed = 0;
             this.SetShotReactionAnimation(true);
             particleDamage.Play();

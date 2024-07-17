@@ -22,7 +22,7 @@ public class StateWalkToPlayer : StateZombieNPC {
     public override void Update() {
         directionToPlayer = npc.GetPlayerPosition() - npc.transform.position;
 
-        Debug.Log("StateWalkToPlayer - Distance: " + directionToPlayer.magnitude);
+     //   Debug.Log("StateWalkToPlayer - Distance: " + directionToPlayer.magnitude);
 
         nextToPlayer = directionToPlayer.magnitude <= 2.5f;
         if (nextToPlayer) {

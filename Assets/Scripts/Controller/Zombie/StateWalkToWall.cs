@@ -22,7 +22,7 @@ public class StateWalkToWall : StateZombieNPC {
     public override void Update() {
         directionToPlayer = npc.GetPlayerPosition() - npc.transform.position;
 
-        Debug.Log("StateWalkToWall - Distance: " + directionToPlayer.magnitude);
+      //  Debug.Log("StateWalkToWall - Distance: " + directionToPlayer.magnitude);
 
         // Check if it is seeing the Player
         seePlayer = directionToPlayer.magnitude <= npc.GetMinDistance();

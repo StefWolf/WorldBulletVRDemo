@@ -14,7 +14,7 @@ public class Player
         name = _name;
         hp = 100;
         hunger = 100;
-        moneys = 0;
+        moneys = 10000;
     }
 
 }

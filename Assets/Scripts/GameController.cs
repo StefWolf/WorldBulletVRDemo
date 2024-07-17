@@ -58,7 +58,7 @@ public class GameController : MonoBehaviour
         System.Random random = new System.Random();
         int randomIndex = random.Next(0, pointsOfSpawnZombie.Count);
         int randomIndexZombies = random.Next(0, zombiesPrefabs.Count);
-        Debug.Log("Spawnando zombie " + randomIndexZombies + " em " + pointsOfSpawnZombie[randomIndex].transform);
+      //  Debug.Log("Spawnando zombie " + randomIndexZombies + " em " + pointsOfSpawnZombie[randomIndex].transform);
 
         Vector3 positionBornZombie = new Vector3(
             pointsOfSpawnZombie[randomIndex].transform.position.x, 

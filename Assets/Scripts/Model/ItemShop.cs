@@ -15,8 +15,10 @@ public class ItemShop : MonoBehaviour
 
     public void BuyItem()
     {
+        Debug.Log("Comprar item, moneys: "+ playerController.GetMoneys());
         if(playerController.GetMoneys() >= price)
         {
+            Debug.Log("Ele comprou");
             playerController.RemoveMoney(price);
 
             Transform transform = GameObject.Find("spawnItemsDrop").transform;

@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MP5_Ammo
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 53d6317e9619312419fe959daf82c015, type: 3}
+      propertyPath: m_TagString
+      value: Bullet
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
