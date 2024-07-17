@@ -54,7 +54,7 @@ public class GameController : MonoBehaviour
 
     void SpawnZombie()
     {   
-        //if (limit > 0) { return; }
+        if (limit > 0) { return; }
         System.Random random = new System.Random();
         int randomIndex = random.Next(0, pointsOfSpawnZombie.Count);
         int randomIndexZombies = random.Next(0, zombiesPrefabs.Count);
@@ -66,7 +66,7 @@ public class GameController : MonoBehaviour
             pointsOfSpawnZombie[randomIndex].transform.position.z);
 
         Instantiate(zombiesPrefabs[randomIndexZombies], positionBornZombie, Quaternion.identity);
-        //limit += 1;
+        limit += 1;
     }
 
     void Update()
