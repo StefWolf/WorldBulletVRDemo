@@ -8,6 +8,7 @@ public class ZombieNPC : MonoBehaviour {
     private int life = 100;
     private float moveSpeedMemo, minDistance = 10f;
     private Animator animator;
+    private GameController gameController;
 
     // NPC finite state machine
     private StateZombieNPC currentState;
@@ -44,6 +45,7 @@ public class ZombieNPC : MonoBehaviour {
         currentState.Update();
         if(life <= 0) {
             Destroy(gameObject);
+            gameController.DecrementZombieCount();
         }
 
         timeSinceLastDamage += Time.deltaTime;
@@ -62,6 +64,7 @@ public class ZombieNPC : MonoBehaviour {
         }
         if (this.life < 0) {
             Destroy(gameObject);
+            gameController.DecrementZombieCount();
         }
     }
 
@@ -125,8 +128,6 @@ public class ZombieNPC : MonoBehaviour {
         return this.stateKillPlayer;
     }
 
-    // TODO - Add more getters states here
-
     public int GetLife() {
         return this.life;
     }
@@ -136,6 +137,10 @@ public class ZombieNPC : MonoBehaviour {
 
     public float GetMoveSpeed() {
         return this.moveSpeed;
+    }
+
+    public void SetGameController(GameController gameController) {
+        this.gameController = gameController;
     }
 
     public void SetWalkingAnimation()  {
