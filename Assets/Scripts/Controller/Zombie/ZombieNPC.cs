@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,6 +19,8 @@ public class ZombieNPC : MonoBehaviour {
 
     [SerializeField] private int damageAmount = 10;
     [SerializeField] private float moveSpeed;
+    [SerializeField] private List<AudioClip> sounds;
+    [SerializeField] private AudioClip shotReactionAudio;
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject wall;
     [SerializeField] private ParticleSystem particleDamage;
@@ -39,6 +41,8 @@ public class ZombieNPC : MonoBehaviour {
         moveSpeedMemo = moveSpeed;
         currentState = stateWalkToWall;
         currentState.Enter();
+
+        this.PlaySound();
     }
 
     private void Update() {
@@ -49,6 +53,13 @@ public class ZombieNPC : MonoBehaviour {
         }
 
         timeSinceLastDamage += Time.deltaTime;
+    }
+
+    private void PlaySound() {
+        AudioManager.Instance.StopAudio();
+        System.Random random = new System.Random();
+        int index = random.Next(0, sounds.Count);
+        AudioManager.Instance.PlayAudio(sounds[index], true);
     }
 
     public void ChangeState(StateZombieNPC newState) {
@@ -72,6 +83,7 @@ public class ZombieNPC : MonoBehaviour {
         Debug.Log("o " + other.tag + " entrou em colisão com o zumbi");
         if (other.CompareTag("Bullet")){
             Debug.Log("Acertou o zumbi!");
+            // AudioManager.Instance.StopAudio();
             moveSpeed = 0;
             this.SetShotReactionAnimation(true);
             particleDamage.Play();
@@ -160,7 +172,9 @@ public class ZombieNPC : MonoBehaviour {
 
     public void SetShotReactionAnimation(bool flag) {
         Debug.Log("Shot Reaction End!");
+        AudioManager.Instance.PlayAudio(shotReactionAudio);
         this.animator.SetBool("shotReaction", flag);
+        this.PlaySound();
     }
 
     public void SetLife(int life){

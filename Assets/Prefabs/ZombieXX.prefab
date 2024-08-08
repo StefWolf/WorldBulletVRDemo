@@ -189,6 +189,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageAmount: 10
   moveSpeed: 2
+  sounds:
+  - {fileID: 8300000, guid: 28438e7459f571a428bca3bfa4dd3e26, type: 3}
+  - {fileID: 8300000, guid: a2c8976a37c3910409eed2a254bd1086, type: 3}
+  - {fileID: 8300000, guid: be94ce3f6b003be4f98e8a8145dbb03c, type: 3}
+  - {fileID: 8300000, guid: 90224932461d13942923718d6092491d, type: 3}
+  - {fileID: 8300000, guid: 84bca42308a69ff469cd5dea266adbe4, type: 3}
   player: {fileID: 0}
   wall: {fileID: 0}
   particleDamage: {fileID: 7099171561714179686}
