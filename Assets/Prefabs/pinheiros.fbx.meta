@@ -5,10 +5,20 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Materiais
+    second: {fileID: 2100000, guid: e3c76d26043c83a40b2dd27905591b4b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Materiais.001
+    second: {fileID: 2100000, guid: f779737829a5ce1488a2c217a33b45af, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: istockphoto-1332867721-612x612
-    second: {fileID: 2800000, guid: 4c1807e09f857cb49968ed7a8794c746, type: 3}
+    second: {fileID: 2800000, guid: 5b67ab7b0c10eb9409491391a42383fa, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -83,7 +93,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human: []

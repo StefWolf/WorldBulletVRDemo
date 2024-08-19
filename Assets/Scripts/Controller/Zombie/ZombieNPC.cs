@@ -42,7 +42,7 @@ public class ZombieNPC : MonoBehaviour {
         currentState = stateWalkToWall;
         currentState.Enter();
 
-        this.PlaySound();
+       // this.PlaySound();
     }
 
     private void Update() {

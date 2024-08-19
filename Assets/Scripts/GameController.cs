@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour {
     [SerializeField] private List<GameObject> pointsOfSpawnZombie;
     [SerializeField] private List<GameObject> zombiesPrefabs;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private Gate gate;
 
     private int limit = 0; // TODO - remover
 
@@ -71,9 +72,12 @@ public class GameController : MonoBehaviour {
             //Desativar loja
         }
 
-        if (!playerController.VerifyHP()) {
+        if (!playerController.VerifyHP())
             GameOver();
-        }
+
+
+        if (gate.GetHp() == 0)
+            GameOver();
     }
 
 
@@ -102,9 +106,6 @@ public class GameController : MonoBehaviour {
 
         activeZombies += 1;
 
-        Debug.Log("activeZombies: " + activeZombies);
-        Debug.Log("currentSpawnDelay: " + currentSpawnDelay);
-
         ZombieNPC zombieScript = zombie.AddComponent<ZombieNPC>();
         zombieScript.SetGameController(this);
     }
@@ -115,6 +116,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void GameOver() {
+        Debug.Log("GAME OVER");
         DestroyAllWithTag("Zombie");
         canvasGameOver.transform.Find("XP").GetComponent<TextMeshProUGUI>().text = playerController.GetMoneys().ToString();
         canvasGameOver.gameObject.SetActive(true);

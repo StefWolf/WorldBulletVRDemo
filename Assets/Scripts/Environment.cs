@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class Environment : MonoBehaviour
 {
-    [SerializeField] private AudioClip sound;
+    [SerializeField] private AudioSource sound;
 
     void Start() {
-        AudioManager.Instance.PlayAudio(sound, true);
+        AudioClip clip = sound.clip;
+        AudioManager.Instance.PlayAudio(clip, true);
     }
 }
